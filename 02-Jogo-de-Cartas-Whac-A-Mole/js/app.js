@@ -27,7 +27,20 @@ quadrado.forEach(id => {
 })
 
 function moverToupeira() {
+    let timerId = null
     timerId = setInterval(randomSquare, 1000)
 }
 
 moverToupeira()
+
+function contagemRegressiva() {
+    tempoAtual--
+    tempoRestante.textContent = tempoAtual
+
+    if (tempoAtual === 0) {
+        clearInterval(timerId)
+        alert('FIM DE JOGO! Sua pontuação final é' + result)
+    }
+}
+
+let timerId = setInterval(contagemRegressiva, 1000)

@@ -4,10 +4,13 @@ const tempoRestante = document.querySelector('#tempo-restante')
 const pontuacao = document.querySelector('#pontuacao')
 
 let result = 0
+let hitPosition
+let tempoAtual = 60
+let timerId = null
 
 function randomSquare() {
-    quadrado.forEach(className => {
-        className.classList.remove('toupeira')
+    quadrado.forEach(quadrado => {
+        quadrado.classList.remove('toupeira')
     })
 
     let randomPosition = quadrado[Math.floor(Math.random() * 9)]
@@ -16,19 +19,19 @@ function randomSquare() {
     hitPosition = randomPosition.id
 }
 
-quadrado.forEach(id => {
-    id.addEventListener('mouseup', () => {
-        if (id.id == hitPosition) {
+quadrado.forEach(quadrado => {
+    quadrado.addEventListener('mousedown', () => {
+        if (quadrado.id == hitPosition) {
             result = result + 1
             pontuacao.textContent = result
-                // hitPosition = null
+            hitPosition = null
         }
     })
 })
 
 function moverToupeira() {
-    let timerId = null
-    timerId = setInterval(randomSquare, 1000)
+
+    timerId = setInterval(randomSquare, 500)
 }
 
 moverToupeira()
@@ -38,9 +41,10 @@ function contagemRegressiva() {
     tempoRestante.textContent = tempoAtual
 
     if (tempoAtual === 0) {
+        clearInterval(countDownTimerId)
         clearInterval(timerId)
-        alert('FIM DE JOGO! Sua pontuação final é' + result)
+        alert('FIM DE JOGO! Sua pontuação final é ' + result)
     }
 }
 
-let timerId = setInterval(contagemRegressiva, 1000)
+let countDownTimerId = setInterval(contagemRegressiva, 1000)
